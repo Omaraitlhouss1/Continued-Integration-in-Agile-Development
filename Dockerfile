@@ -14,7 +14,7 @@ WORKDIR /app
 # Copy the Maven project into the container
 COPY . .
 
-# Expose port 8080
+# Expose port 8082
 EXPOSE 8082
 
 # Command to run the Spring Boot application
