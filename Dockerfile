@@ -1,6 +1,6 @@
 # Use Ubuntu 20.04 as the base image
 FROM ubuntu:20.04
-
+#test
 # Install OpenJDK 11
 RUN apt-get update && \
     apt-get install -y openjdk-17-jdk
