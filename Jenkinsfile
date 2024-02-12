@@ -20,5 +20,12 @@ pipeline {
                 sh "sudo docker compose up -d"
             }
         }
+        stage("SonarQube Analysis") {
+            steps {
+        withSonarQubeEnv('SonarQubeServer') {
+            sh 'sonar-scanner'
+            }
+        }
+        
     }
 }
