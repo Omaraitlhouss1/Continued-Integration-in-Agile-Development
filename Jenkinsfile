@@ -2,7 +2,7 @@ pipeline {
     agent any 
     
     stages {
-        stage("Build") {
+        stage("Build") { 
             steps {
                 echo "Building the image"
                 sh "sudo docker compose build"
