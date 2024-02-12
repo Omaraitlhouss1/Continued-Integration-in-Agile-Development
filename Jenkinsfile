@@ -5,27 +5,27 @@ pipeline {
         stage("Build") { 
             steps {
                 echo "Building the image"
-                sh "sudo docker compose build"
+                sh "sudo docker-compose build"
             }
         }
         stage("Down") {
             steps {
                 echo "Stopping and removing old containers"
-                sh "sudo docker compose down"
+                sh "sudo docker-compose down"
             }
         }
         stage("Deploy") {
             steps {
                 echo "Deploying the container"
-                sh "sudo docker compose up -d"
+                sh "sudo docker-compose up -d"
             }
         }
         stage("SonarQube Analysis") {
             steps {
-        withSonarQubeEnv('SonarQubeServer') {
-            sh 'sonar-scanner'
+                withSonarQubeEnv('SonarQubeServer') {
+                    sh 'sonar-scanner'
+                }
             }
         }
-        
     }
 }
