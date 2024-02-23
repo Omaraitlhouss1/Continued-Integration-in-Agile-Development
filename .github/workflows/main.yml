@@ -12,7 +12,7 @@ jobs:
 
     steps:
     - name: Install SSH client
-      run: sudo apt-get install -y openssh-client
+      run: sudo apt-get install -y openssh-client 
 
     - name: SSH into VPS and echo message
       uses: appleboy/ssh-action@master
