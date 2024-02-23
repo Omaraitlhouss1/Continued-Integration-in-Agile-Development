@@ -34,10 +34,12 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
           echo "Login successful"
+          docker rmi -f $(docker images -q)
           docker pull omaraitlhouss1/webapp:latest
+          
           docker rm -f $(docker ps -q)
 
-          docker run --name webapp -p 8083:8080 omaraitlhouss1/webapp:latest
+          docker run -p 8083:8080 omaraitlhouss1/webapp:latest
 
           
         
