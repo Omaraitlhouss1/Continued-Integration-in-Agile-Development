@@ -18,7 +18,7 @@ jobs:
       run: |
         docker build . --file Dockerfile --tag omaraitlhouss1/webapp:latest
     - name: Log into Docker Hub
-      run: echo "dckr_pat_sNHexFigLYYQrvAvbXPaiA5bXBQ" | docker login -u "omaraitlhouss1" --password-stdin
+      run: echo "DOCKERHUB_TOKEN" | docker login -u "omaraitlhouss1" --password-stdin
 
     - name:  push Docker images to Docker Hub
       run: |
