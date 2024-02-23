@@ -24,7 +24,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: omaraitlhouss1/webapp:${{ github.sha }}
+          tags: omaraitlhouss1/webapp:latest
 
       - name: Deploy to azure vm
         uses: appleboy/ssh-action@master
@@ -35,5 +35,5 @@ jobs:
           script: |
             docker stop webapp || true
             docker rm webapp || true
-            docker pull ${DOCKER_USERNAME}/webapp:${{ github.sha }}
+            docker pull ${DOCKER_USERNAME}/webapp:latest
             docker run -d -p 80:8080 ${DOCKER_USERNAME}/webapp:${{ github.sha }}
