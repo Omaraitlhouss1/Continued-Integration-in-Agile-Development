@@ -35,6 +35,7 @@ jobs:
         script: |
           echo "Login successful"
           docker pull omaraitlhouss1/webapp:latest
-          docker run  --naeme webapp -p 8084:8080 omaraitlhouss1/webapp:latest 
+          docker run --name webapp -p 8084:8080 omaraitlhouss1/webapp:latest
+
           
         
