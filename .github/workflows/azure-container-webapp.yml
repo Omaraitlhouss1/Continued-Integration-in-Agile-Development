@@ -10,14 +10,14 @@ jobs:
     name: Build and Deploy
     runs-on: ubuntu-latest
 
-    steps:
+    steps: 
     - name: Checkout code
       uses: actions/checkout@v2
 
     - name: Build Docker images
       run: |
         docker build . --file Dockerfile --tag ${{ env.DOCKER_IMAGE_NAME }}:latest
-        # Add more docker build commands if you have multiple images
+        
 
     - name: Log into Docker Hub
       run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login --username "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
