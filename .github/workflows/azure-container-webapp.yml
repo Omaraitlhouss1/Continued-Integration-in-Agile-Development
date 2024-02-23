@@ -39,7 +39,7 @@ jobs:
           
           docker rm -f $(docker ps -q)
 
-          docker run -p 8083:8080 omaraitlhouss1/webapp:latest
+          docker run -p 8083:8082 omaraitlhouss1/webapp:latest
 
           
         
