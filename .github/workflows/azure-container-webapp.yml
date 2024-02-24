@@ -36,21 +36,24 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             echo "Login successful"
-      - name: Deploy
+      
+      - name: Check if container is running
         run: |
-          docker rmi -f $(docker images -q)
-          docker pull omaraitlhouss1/webapp:latest
-          docker run -d -p 8083:8082 --name webapp omaraitlhouss1/webapp:latest
+         if docker ps -a --format '{{.Names}}' | grep -Eq '^webapp$'; then
+           docker stop webapp
+         fi
 
+      - name: Remove existing container (if any)
+        run: |
+         if docker ps -a --format '{{.Names}}' | grep -Eq '^webapp$'; then
+          docker rm webapp
+        fi
 
-  qa:
-    name: QA
-    runs-on: ubuntu-latest
+    - name: Pull latest Docker image
+      run: docker pull omaraitlhouss1/webapp:latest
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
+    - name: Run Docker container
+      run: docker run -d -p 8083:8082 --name webapp omaraitlhouss1/webapp:latest
       # Add QA steps here
 
       - name: Run QA tests
