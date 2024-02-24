@@ -56,31 +56,6 @@ jobs:
         run: docker run -d -p 8083:8082 --name webapp omaraitlhouss1/webapp:latest
         # Add QA steps here
 
-      - name: Run QA tests
-        run: |
-          # Check if the container is running
-          if docker ps -f name=webapp --format '{{.Names}}' | grep -q webapp; then
-            # If the container is running, execute pytest inside the container
-            docker exec webapp pytest
-          else
-            # If the container is not running, exit with an error
-            echo "Container is not running"
-            exit 1
-          fi
-
-      - name: Generate PDF report
-        run: |
-          # Check if the container is running
-          if docker ps -f name=webapp --format '{{.Names}}' | grep -q webapp; then
-            # If the container is running, execute wkhtmltopdf to convert HTML report to PDF
-            docker exec webapp wkhtmltopdf /azure/ qa_report.pdf
-            echo "PDF report generated"
-          else
-            # If the container is not running, exit with an error
-            echo "Container is not running"
-            exit 1
-          fi
-
       - name: Generate QA report
         run: |
           if docker ps -f name=webapp --format '{{.Names}}' | grep -q webapp; then
@@ -89,3 +64,5 @@ jobs:
             echo "Container is not running"
             exit 1
           fi
+
+      
