@@ -59,5 +59,9 @@ jobs:
 
       - name: Generate QA report
         run: |
-          # Add commands to generate QA report here
-
+            if docker ps -f name=webapp --format '{{.Names}}' | grep -q webapp; then
+              echo "Container is running"
+            else
+              echo "Container is not running"
+               exit 1
+             fi
