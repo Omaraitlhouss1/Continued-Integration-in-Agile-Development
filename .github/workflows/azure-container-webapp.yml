@@ -40,8 +40,6 @@ jobs:
         run: |
           docker rmi -f $(docker images -q)
           docker pull omaraitlhouss1/webapp:latest
-          docker stop webapp
-           docker rm webapp
           docker run -d -p 8083:8082 --name webapp omaraitlhouss1/webapp:latest
 
 
