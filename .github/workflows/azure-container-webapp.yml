@@ -1,4 +1,4 @@
-name: baloncesto-pre 
+name: baloncesto-pre
 
 on:
   push:
@@ -39,22 +39,22 @@ jobs:
       
       - name: Check if container is running
         run: |
-         if docker ps -a --format '{{.Names}}' | grep -Eq '^webapp$'; then
-           docker stop webapp
-         fi
+          if docker ps -a --format '{{.Names}}' | grep -Eq '^webapp$'; then
+            docker stop webapp
+          fi
 
       - name: Remove existing container (if any)
         run: |
-         if docker ps -a --format '{{.Names}}' | grep -Eq '^webapp$'; then
-          docker rm webapp
-        fi
+          if docker ps -a --format '{{.Names}}' | grep -Eq '^webapp$'; then
+            docker rm webapp
+          fi
 
-    - name: Pull latest Docker image
-      run: docker pull omaraitlhouss1/webapp:latest
+      - name: Pull latest Docker image
+        run: docker pull omaraitlhouss1/webapp:latest
 
-    - name: Run Docker container
-      run: docker run -d -p 8083:8082 --name webapp omaraitlhouss1/webapp:latest
-      # Add QA steps here
+      - name: Run Docker container
+        run: docker run -d -p 8083:8082 --name webapp omaraitlhouss1/webapp:latest
+        # Add QA steps here
 
       - name: Run QA tests
         run: |
@@ -62,9 +62,9 @@ jobs:
 
       - name: Generate QA report
         run: |
-            if docker ps -f name=webapp --format '{{.Names}}' | grep -q webapp; then
-              echo "Container is running"
-            else
-              echo "Container is not running"
-               exit 1
-             fi
+          if docker ps -f name=webapp --format '{{.Names}}' | grep -q webapp; then
+            echo "Container is running"
+          else
+            echo "Container is not running"
+            exit 1
+          fi
