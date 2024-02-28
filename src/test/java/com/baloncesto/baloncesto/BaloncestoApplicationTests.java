@@ -8,6 +8,6 @@ class BaloncestoApplicationTests {
 
 	@Test
 	void contextLoads() {
-	}
+	} 
 
 }
