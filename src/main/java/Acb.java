@@ -5,7 +5,7 @@ import javax.servlet.http.*;
 public class Acb extends HttpServlet {
 
     private ModeloDatos bd;
-
+ 
     public void init(ServletConfig cfg) throws ServletException {
         bd = new ModeloDatos();
         bd.abrirConexion();
