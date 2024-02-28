@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS `Jugadores` (
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
-INSERT INTO Jugadores (nombre, votos) VALUES ('Llull', 0);
+INSERT INTO Jugadores (nombre, votos) VALUES ('Llull', 0); 
 INSERT INTO Jugadores (nombre, votos) VALUES ('Rudy', 0);
 INSERT INTO Jugadores (nombre, votos) VALUES ('Tavares', 0);
 
