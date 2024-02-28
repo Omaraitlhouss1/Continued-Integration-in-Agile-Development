@@ -5,7 +5,7 @@ public class ModeloDatos {
     private Connection con;
     private Statement set;
     private ResultSet rs;
-
+ 
     public void abrirConexion() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
