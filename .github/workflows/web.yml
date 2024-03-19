@@ -1,44 +1,55 @@
-name: CI
+name: baloncesto-pre
 
-on: push
-
+on:
+  push:
+    branches:
+      - main
 jobs:
   build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: descargar repostorio
-        uses: actions/checkout@v3
-      - name: pruebas-unitarias
-        run: mvn test
-      - name: compilar la aplicación sin repetir pruebas
-        run:  mvn package -DskipTests=true
-
-  test:
-    needs: build
+    name: Build
     runs-on: self-hosted
-    steps:
-      - name: descargar repostorio
-        uses: actions/checkout@v3
-      - name: instalar aplicación en Tomcat
+
+    steps: 
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build Docker images
         run: |
-          mvn package -DskipTests=true
-        
-      - name: preparar base de datos de prueba
+          docker build . --file Dockerfile --tag omaraitlhouss1/webapp:latest
+    
+      - name: Log into Docker Hub
+        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "omaraitlhouss1" --password-stdin
+
+      - name: Push Docker images to Docker Hub
         run: |
-          mysql -u root < db/baloncesto.sql
-          export DATABASE_HOST="jdbc:mysql://localhost"
-          export DATABASE_PORT="3306"
-          export DATABASE_NAME="baloncesto"
-          export DATABASE_USER="usuario"
-          export DATABASE_PASS="clave"
-          sh /usr/local/tomcat/bin/catalina.sh stop
-          sh /usr/local/tomcat/bin/catalina.sh start
-      - name: realizar pruebas funcionales
+          docker push omaraitlhouss1/webapp:latest
+
+      - name: Install SSH client
+        run: sudo apt-get install -y openssh-client 
+
+      - name: SSH into Azure VM and echo message
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            echo "Login successful"
+      
+      - name: Check if container is running
         run: |
-          mvn failsafe:integration-test failsafe:verify
+          if docker ps -a --format '{{.Names}}' | grep -Eq '^webapp$'; then
+            docker stop webapp
+          fi
+
+      - name: Remove existing container (if any)
+        run: |
+          if docker ps -a --format '{{.Names}}' | grep -Eq '^webapp$'; then
+            docker rm webapp
+          fi
 
   qa:
-    needs: test
+    needs: build
     runs-on: self-hosted
     continue-on-error: true
     steps:
